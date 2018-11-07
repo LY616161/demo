@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.dao.ProductDao">
+    <resultMap id="product" type="com.ssm.entry.Product">
+        <id column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_type" property="productType" jdbcType="VARCHAR"/>
+        <result column="product_status" property="productStatus" jdbcType="VARCHAR"/>
+        <result column="product_img" property="productImg" jdbcType="VARCHAR"/>
+        <result column="product_sort" property="productSort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="list" resultMap="product">
+        SELECT * FROM productinfo ORDER BY product_sort
+    </select>
+
+    <insert id="create">
+        INSERT INTO
+          productinfo(product_name,product_type,product_status,product_img,product_sort)
+        VALUES
+          (#{productName},#{productType},#{productStatus},#{productImg},#{productSort})
+    </insert>
+    <!--<select id="selectDirectorById" resultMap="director" parameterType="INTEGER">
+        SELECT * FROM director WHERE director_id = #{id}
+    </select>
+
+    <insert id="insertDirector">
+        INSERT INTO director(director_id,director_name,director_age) VALUES (#{id},#{directorName},#{directorAge})
+    </insert>
+
+    <delete id="deleteDirector" parameterType="INTEGER">
+        DELETE  FROM director WHERE director_id = #{id}
+    </delete>
+
+    <update id="updateDirector">
+        UPDATE director SET director_name = #{directorName},director_age = #{directorAge} WHERE director_id = #{id}
+    </update>
+
+    <select id="listDirectorAndMovie" resultMap="resultMap">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id
+    </select>
+
+    <select id="selectDirectorAndMovie" resultMap="resultMap" parameterType="INTEGER">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id WHERE d.director_id = #{id}
+    </select>
+
+    <insert id="insertDirectorDate">
+        INSERT INTO director(director_id,director_name,director_age,director_birth) VALUES (#{id},#{directorName},#{directorAge},#{birth})
+    </insert>
+
+    <select id="listDate" resultMap="resultMap1">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id
+    </select>
+-->
+</mapper>

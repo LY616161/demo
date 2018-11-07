@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.dao.DirectorDao">
+    <resultMap id="director" type="com.ssm.entry.Director">
+        <id column="director_id" property="id" jdbcType="INTEGER"/>
+        <result column="director_name" property="directorName" jdbcType="VARCHAR"/>
+        <result column="director_age" property="directorAge" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="director1" type="com.ssm.entry.Director">
+        <id column="director_id" property="id" jdbcType="INTEGER"/>
+        <result column="director_name" property="directorName" jdbcType="VARCHAR"/>
+        <result column="director_age" property="directorAge" jdbcType="VARCHAR"/>
+        <result column="director_birth" property="birth" jdbcType="DATE"/>
+    </resultMap>
+    
+    <resultMap id="directorAndMovie" type="com.ssm.entry.Director">
+        <id column="director_id" property="id" jdbcType="INTEGER"/>
+        <result column="director_name" property="directorName" jdbcType="VARCHAR"/>
+        <result column="director_age" property="directorAge" jdbcType="VARCHAR"/>
+        <collection property="movieList" ofType="com.ssm.entry.Movie">
+            <id column="movie_id" property="id" jdbcType="INTEGER"/>
+            <result column="movie_name" property="movieName" jdbcType="VARCHAR"/>
+            <result column="director_id" property="directorId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.ssm.entry.Director" extends="director">
+        <collection property="movieList" ofType="com.ssm.entry.Movie">
+            <id column="movie_id" property="id" jdbcType="INTEGER"/>
+            <result column="movie_name" property="movieName" jdbcType="VARCHAR"/>
+            <result column="director_id" property="directorId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="resultMap1" type="com.ssm.entry.Director" extends="director1">
+        <collection property="movieList" ofType="com.ssm.entry.Movie">
+            <id column="movie_id" property="id" jdbcType="INTEGER"/>
+            <result column="movie_name" property="movieName" jdbcType="VARCHAR"/>
+            <result column="director_id" property="directorId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="listDirector" resultMap="director">
+        SELECT * FROM director
+    </select>
+
+    <select id="selectDirectorById" resultMap="director" parameterType="INTEGER">
+        SELECT * FROM director WHERE director_id = #{id}
+    </select>
+
+    <insert id="insertDirector">
+        INSERT INTO director(director_id,director_name,director_age) VALUES (#{id},#{directorName},#{directorAge})
+    </insert>
+
+    <delete id="deleteDirector" parameterType="INTEGER">
+        DELETE  FROM director WHERE director_id = #{id}
+    </delete>
+
+    <update id="updateDirector">
+        UPDATE director SET director_name = #{directorName},director_age = #{directorAge} WHERE director_id = #{id}
+    </update>
+
+    <select id="listDirectorAndMovie" resultMap="resultMap">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id
+    </select>
+
+    <select id="selectDirectorAndMovie" resultMap="resultMap" parameterType="INTEGER">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id WHERE d.director_id = #{id}
+    </select>
+
+    <insert id="insertDirectorDate">
+        INSERT INTO director(director_id,director_name,director_age,director_birth) VALUES (#{id},#{directorName},#{directorAge},#{birth})
+    </insert>
+
+    <select id="listDate" resultMap="resultMap1">
+        SELECT d.*, m.* FROM director d LEFT JOIN movie m on d.director_id = m.director_id
+    </select>
+
+</mapper>
